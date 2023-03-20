@@ -1,3 +1,5 @@
+(() => {
+
 const btn = document.querySelector('[data-form-btn]');
 
 console.log(btn);
@@ -12,16 +14,40 @@ const createTask = (evento) => {
     const task = document.createElement('li');
     task.classList.add("card");
     input.value = '';
+
+    const taskContent = document.createElement("div");
+    const taskTitle = document.createElement("span");
+    taskContent.appendChild(checkComplete());
+
+    taskTitle.classList.add('task');
+    taskTitle.innerText=value;
+    taskContent.appendChild(taskTitle);
     //backsticks
-    const content = `<div>
-    <i class="far fa-check-square icon"></i>
+    const content = `
+    
     <span class="task">${value}</span>
   </div>
   <i class="fas fa-trash-alt trashIcon icon"></i>`;
-    task.innerHTML = content;
+    //task.innerHTML = content;
+    task.appendChild(taskContent);
 
     list.appendChild(task);
     console.log(content);
 };
 
 btn.addEventListener('click', createTask);
+
+const checkComplete = () => {
+    const i = document.createElement("li");
+    i.classList.add("far","fa-check-square","icon");    
+    i.addEventListener("click", completeTask);
+    return i;
+}
+// Inmmediately invoked function expression IIFE
+const completeTask = (evento) =>{
+    const elemento = evento.target;
+    elemento.classList.toggle("fas");
+    elemento.classList.toggle("completeIcon");
+    elemento.classList.toggle("far");
+}
+}) ();
